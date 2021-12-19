@@ -16,9 +16,12 @@ const getRouter = (req, res, next) => {
       const input = document.querySelector('input');
       const state = {};
 
+      // debounce replacing state - push every once in a while
       const updateURL = function updateURL(e) {
         console.log(e.target.value);
         const path = '/' + e.target.value.trim().replace(/ /g, '/');
+        // emojis? non-english chars?
+        const spaceSeparatedVals = '/' + e.target.value.split(' ').map(encodeURIComponent).join('/');
         history.replaceState(state, '', path);
       };
 
@@ -90,7 +93,7 @@ const getRouter = (req, res, next) => {
         <body>
           <h1>
             <label for="blank">your opinion is </label>
-            <input type="text" id="blank" name="blank" value="${pathAsString || '...'}">
+            <input type="text" id="blank" name="blank" value="${/*req.url.split('/').map(decodeURIComponent).join(' ').trim()*/ pathAsString || '...'}">
           </h1>
           <script src="/static/main.js"></script>
         </body>

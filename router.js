@@ -5,15 +5,43 @@ const headers = {
   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
   "access-control-allow-headers": "content-type, accept",
   "access-control-max-age": 10
-}
+};
 
 const getRouter = (req, res, next) => {
-  const pathAsString = req.url.replace(/\//g, ' ').trim();
-  console.log('path as string', pathAsString);
-  res.writeHead(200, headers);
-  res.write(pathAsString);
-  res.end();
-  next();
+  // const path = req.url.split('/');
+  switch(req.url) {
+    case '/static/main.js':
+      res.writeHead(200, headers);
+      res.write('console.log(\'js working!\')');
+      res.end();
+      next();
+      break;
+      case '/static/main.css':
+        res.writeHead(200, headers);
+        res.write('body {\n  background-color: red;\n}\n');
+        res.end();
+        next();
+        break;
+    // case '/favicon.ico':
+    //   break;
+    // case '/js':
+    //   break;
+    default:
+      const pathAsString = req.url.replace(/\//g, ' ').trim();
+      console.log('path as string', pathAsString);
+      res.writeHead(200, headers);
+      res.write(`<html>
+      <head>
+        <link rel="stylesheet" type="text/css" href="/static/main.css">
+      </head>
+      <body>
+        <h1>${pathAsString}</h1>
+        <script src="/static/main.js"></script>
+      </body>
+      </html>`);
+      res.end();
+      next();
+  }
 };
 
 exports.route = (req, res, next = ()=>{}) => {
@@ -38,4 +66,4 @@ exports.route = (req, res, next = ()=>{}) => {
       next(); // invoke next() at the end of a request to help with testing!
       break;
   }
-}
+};

@@ -14,15 +14,17 @@ const getRouter = (req, res, next) => {
       res.writeHead(200, headers);
       res.write(`console.log('js working!');
       const input = document.querySelector('input');
+      const title = document.querySelector('title');
       const state = {};
 
       // debounce replacing state - push every once in a while
       const updateURL = function updateURL(e) {
-        console.log(e.target.value);
-        const path = '/' + e.target.value.trim().replace(/ /g, '/');
+        const val = e.target.value.trim();
+        const path = '/' + val.replace(/ /g, '/');
         // emojis? non-english chars?
-        const spaceSeparatedVals = '/' + e.target.value.split(' ').map(encodeURIComponent).join('/');
+        const spaceSeparatedVals = '/' + val.split(' ').map(encodeURIComponent).join('/');
         history.replaceState(state, '', path);
+        title.innerText = \`your opinion is \${val}\`;
       };
 
       input.addEventListener('input', updateURL);
@@ -88,7 +90,7 @@ const getRouter = (req, res, next) => {
       res.write(`<html>
         <head>
           <link rel="stylesheet" type="text/css" href="/static/main.css">
-          <title>your opinion is </title>
+          <title>your opinion is ${pathAsString || '...'}</title>
         </head>
         <body>
           <h1>

@@ -18,7 +18,47 @@ const getRouter = (req, res, next) => {
       break;
       case '/static/main.css':
         res.writeHead(200, headers);
-        res.write(`body {\n  background-color: red;\n}
+        res.write(`body {
+          background-color: red;
+        }
+        input {
+          ${/*-webkit-writing-mode: horizontal-tb !important;*/''}
+          font-style: inherit;
+          font-variant-ligatures: inherit;
+          font-variant-caps: inherit;
+          font-variant-numeric: inherit;
+          font-variant-east-asian: inherit;
+          font-weight: inherit;
+          font-stretch: inherit;
+          font-size: inherit;
+          font-family: inherit;
+          text-rendering: auto;
+          color: inherit;
+          ${/*letter-spacing: normal;
+          word-spacing: normal;
+          line-height: normal;
+          text-transform: none;
+          text-indent: 0px;
+          text-shadow: none;
+          display: inline-block;
+          text-align: start;
+          appearance: auto;
+          -webkit-rtl-ordering: logical;
+          */''}
+          cursor: text;
+          background-color: inherit;
+          ${/*margin: 0em;
+          padding: 1px 2px;
+          border-width: 2px;
+          border-style: inset;
+          border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+          border-image: initial;*/''}
+          border: none;
+        }
+
+        input:focus-visible {
+          outline: none;
+        }
         `);
         res.end();
         next();

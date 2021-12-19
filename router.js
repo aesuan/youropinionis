@@ -12,13 +12,14 @@ const getRouter = (req, res, next) => {
   switch(req.url) {
     case '/static/main.js':
       res.writeHead(200, headers);
-      res.write('console.log(\'js working!\')');
+      res.write(`console.log('js working!');`);
       res.end();
       next();
       break;
       case '/static/main.css':
         res.writeHead(200, headers);
-        res.write('body {\n  background-color: red;\n}\n');
+        res.write(`body {\n  background-color: red;\n}
+        `);
         res.end();
         next();
         break;
@@ -31,14 +32,18 @@ const getRouter = (req, res, next) => {
       console.log('path as string', pathAsString);
       res.writeHead(200, headers);
       res.write(`<html>
-      <head>
-        <link rel="stylesheet" type="text/css" href="/static/main.css">
-      </head>
-      <body>
-        <h1>${pathAsString}</h1>
-        <script src="/static/main.js"></script>
-      </body>
-      </html>`);
+        <head>
+          <link rel="stylesheet" type="text/css" href="/static/main.css">
+        </head>
+        <body>
+          <h1>
+            <label for="blank">your opinion is </label>
+            <input type="text" id="blank" name="blank" value="${pathAsString}">
+          </h1>
+          <script src="/static/main.js"></script>
+        </body>
+      </html>
+      `);
       res.end();
       next();
   }

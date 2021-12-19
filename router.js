@@ -12,7 +12,18 @@ const getRouter = (req, res, next) => {
   switch(req.url) {
     case '/static/main.js':
       res.writeHead(200, headers);
-      res.write(`console.log('js working!');`);
+      res.write(`console.log('js working!');
+      const input = document.querySelector('input');
+      const state = {};
+
+      const updateURL = function updateURL(e) {
+        console.log(e.target.value);
+        const path = '/' + e.target.value.trim().replace(/ /g, '/');
+        history.replaceState(state, '', path);
+      };
+
+      input.addEventListener('input', updateURL);
+      `);
       res.end();
       next();
       break;
@@ -74,11 +85,12 @@ const getRouter = (req, res, next) => {
       res.write(`<html>
         <head>
           <link rel="stylesheet" type="text/css" href="/static/main.css">
+          <title>your opinion is </title>
         </head>
         <body>
           <h1>
             <label for="blank">your opinion is </label>
-            <input type="text" id="blank" name="blank" value="${pathAsString}">
+            <input type="text" id="blank" name="blank" value="${pathAsString || '...'}">
           </h1>
           <script src="/static/main.js"></script>
         </body>
